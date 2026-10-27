@@ -1,0 +1,337 @@
+============================= test session starts ==============================
+platform linux -- Python 3.13.15, pytest-8.4.2, pluggy-1.7.0
+rootdir: /content/localGPT
+plugins: cov-7.1.0, typeguard-4.6.0, platformdirs-4.13.3, anyio-4.15.1, langsmith-0.14.11
+collected 46 items
+
+tests/test_filters.py .......F..FF..F.FFFFFF...FFF.......FFFFFFFF...     [100%]
+
+=================================== FAILURES ===================================
+______________ TestCheckString.test_too_long_string_raises_error _______________
+
+self = <test_filters.TestCheckString object at 0x7a372de96650>
+
+    def test_too_long_string_raises_error(self):
+>       long_value = "a" * (_MAX_STRING_LENGTH + 1)
+                            ^^^^^^^^^^^^^^^^^^
+E       NameError: name '_MAX_STRING_LENGTH' is not defined
+
+tests/test_filters.py:61: NameError
+_____________ TestCheckString.test_control_character_raises_error ______________
+
+self = <test_filters.TestCheckString object at 0x7a372e043130>
+
+    def test_control_character_raises_error(self):
+        with pytest.raises(FilterError, match="control character"):
+>           _check_string("field", "eq", "\x00")
+
+tests/test_filters.py:75: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+field = 'field', operator = 'eq', value = '\x00'
+
+    def _check_string(field: str, operator: str, value: Any) -> str:
+        if not isinstance(value, str):
+            raise FilterError(
+                f"filters.{field}.{operator} must be a string, got {type(value).__name__}."
+            )
+        if not value.strip():
+            raise FilterError(f"filters.{field}.{operator} must not be empty.")
+        if len(value) > _MAX_STRING_LENGTH:
+            raise FilterError(
+                f"filters.{field}.{operator} is longer than {_MAX_STRING_LENGTH} characters."
+            )
+        for char in _FORBIDDEN_CHARS:
+            if char in value:
+>               raise FilterError(
+                    f"filters.{field}.{operator} contains a forbidden character "
+                    f"({char!r}); quoting characters are refused, not escaped."
+                )
+E               rag_system.retrieval.filters.FilterError: filters.field.eq contains a forbidden character ('\x00'); quoting characters are refused, not escaped.
+
+rag_system/retrieval/filters.py:137: FilterError
+
+During handling of the above exception, another exception occurred:
+
+self = <test_filters.TestCheckString object at 0x7a372e043130>
+
+    def test_control_character_raises_error(self):
+>       with pytest.raises(FilterError, match="control character"):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: Regex pattern did not match.
+E        Regex: 'control character'
+E        Input: "filters.field.eq contains a forbidden character ('\\x00'); quoting characters are refused, not escaped."
+
+tests/test_filters.py:74: AssertionError
+____________ TestCheckString.test_wildcard_escaped_in_like_pattern _____________
+
+self = <test_filters.TestCheckString object at 0x7a372e043240>
+
+    def test_wildcard_escaped_in_like_pattern(self):
+        result = _like_pattern("test%value%")
+>       assert result == "'\\%%test\\%%value\\%%'"
+E       assert "'%test\\%value\\%%'" == "'\\%%test\\%%value\\%%'"
+E         
+E         - '\%%test\%%value\%%'
+E         ?  --      -
+E         + '%test\%value\%%'
+
+tests/test_filters.py:79: AssertionError
+_______________ TestCheckInt.test_out_of_range_min_raises_error ________________
+
+self = <test_filters.TestCheckInt object at 0x7a372de969e0>
+
+    def test_out_of_range_min_raises_error(self):
+>       with pytest.raises(FilterError, match="int32 range"):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE <class 'rag_system.retrieval.filters.FilterError'>
+
+tests/test_filters.py:92: Failed
+____________________ TestCompileField.test_eq_string_field _____________________
+
+self = <test_filters.TestCompileField object at 0x7a372deec2d0>
+
+    def test_eq_string_field(self):
+>       result = _compile_field(
+                 ^^^^^^^^^^^^^^
+            "document_id", "document_id", "string", ("eq",), "test"
+        )
+E       NameError: name '_compile_field' is not defined
+
+tests/test_filters.py:102: NameError
+__________________ TestCompileField.test_in_list_string_field __________________
+
+self = <test_filters.TestCompileField object at 0x7a372deec410>
+
+    def test_in_list_string_field(self):
+>       result = _compile_field(
+                 ^^^^^^^^^^^^^^
+            "document_id", "document_id", "string", ("in",), ["a", "b"]
+        )
+E       NameError: name '_compile_field' is not defined
+
+tests/test_filters.py:108: NameError
+_________________ TestCompileField.test_contains_string_field __________________
+
+self = <test_filters.TestCompileField object at 0x7a372de96c40>
+
+    def test_contains_string_field(self):
+>       result = _compile_field(
+                 ^^^^^^^^^^^^^^
+            "document_name", "document_id", "string", ("contains",), "nda"
+        )
+E       NameError: name '_compile_field' is not defined
+
+tests/test_filters.py:114: NameError
+________________ TestCompileField.test_int_comparison_operator _________________
+
+self = <test_filters.TestCompileField object at 0x7a372de96d70>
+
+    def test_int_comparison_operator(self):
+>       result = _compile_field(
+                 ^^^^^^^^^^^^^^
+            "chunk_index", "chunk_index", "int", ("gte",), 10
+        )
+E       NameError: name '_compile_field' is not defined
+
+tests/test_filters.py:120: NameError
+_____________ TestCompileField.test_unknown_operator_raises_error ______________
+
+self = <test_filters.TestCompileField object at 0x7a372dedb9b0>
+
+    def test_unknown_operator_raises_error(self):
+        with pytest.raises(FilterError, match="does not support"):
+>           _compile_field(
+            ^^^^^^^^^^^^^^
+                "document_id", "document_id", "string", ("eq",), {"not": "test"}
+            )
+E           NameError: name '_compile_field' is not defined
+
+tests/test_filters.py:127: NameError
+________________ TestCompileFilters.test_valid_filter_compiles _________________
+
+self = <test_filters.TestCompileFilters object at 0x7a372deec550>
+
+    def test_valid_filter_compiles(self):
+>       result = compile_filters(valid_filter)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_filters.py:134: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+filters = <pytest_fixture(<function valid_filter at 0x7a372de7a200>)>
+
+    def compile_filters(filters: Any) -> Optional[CompiledFilter]:
+        """Validate and compile a filter object into a LanceDB where-clause.
+    
+        Returns ``None`` for ``None`` (the no-filter path, which must stay
+        byte-identical to having no filter support at all) and a ``CompiledFilter``
+        otherwise. Raises ``FilterError`` on anything it cannot compile — including
+        an empty object, which is far more likely to be a bug in the caller than a
+        request for "no filtering".
+    
+        An already-compiled filter passes straight through, so plumbing can call
+        this at every layer without recompiling.
+        """
+        if filters is None:
+            return None
+        if isinstance(filters, CompiledFilter):
+            return filters
+        if not isinstance(filters, dict):
+>           raise FilterError(
+                f"filters must be a JSON object, got {type(filters).__name__}. "
+                f"Supported fields: {_describe_support()}."
+            )
+E           rag_system.retrieval.filters.FilterError: filters must be a JSON object, got FixtureFunctionDefinition. Supported fields: document_id (eq, in, contains); document_name (contains); chunk_id (eq, in); chunk_index (eq, in, gt, gte, lt, lte).
+
+rag_system/retrieval/filters.py:252: FilterError
+___________ TestCompileFilters.test_empty_filter_object_raises_error ___________
+
+self = <test_filters.TestCompileFilters object at 0x7a372defc710>
+
+    def test_empty_filter_object_raises_error(self):
+        with pytest.raises(FilterError, match="has no operators"):
+>           _compile_field("document_id", "document_id", "string", ("eq",), {})
+            ^^^^^^^^^^^^^^
+E           NameError: name '_compile_field' is not defined
+
+tests/test_filters.py:152: NameError
+______________ TestCompileFilters.test_in_list_empty_raises_error ______________
+
+self = <test_filters.TestCompileFilters object at 0x7a372e043680>
+
+    def test_in_list_empty_raises_error(self):
+        with pytest.raises(FilterError, match="is an empty list"):
+>           _compile_field(
+            ^^^^^^^^^^^^^^
+                "document_id", "document_id", "string", ("in",), []
+            )
+E           NameError: name '_compile_field' is not defined
+
+tests/test_filters.py:156: NameError
+____________ TestCompileFilters.test_in_list_too_long_raises_error _____________
+
+self = <test_filters.TestCompileFilters object at 0x7a372e043460>
+
+    def test_in_list_too_long_raises_error(self):
+>       long_list = [f"item{i}" for i in range(_MAX_IN_ITEMS + 1)]
+                                               ^^^^^^^^^^^^^
+E       NameError: name '_MAX_IN_ITEMS' is not defined
+
+tests/test_filters.py:161: NameError
+____________ TestBoundaryConditions.test_max_string_length_boundary ____________
+
+self = <test_filters.TestBoundaryConditions object at 0x7a372de96520>
+
+    def test_max_string_length_boundary(self):
+>       max_len = _MAX_STRING_LENGTH
+                  ^^^^^^^^^^^^^^^^^^
+E       NameError: name '_MAX_STRING_LENGTH' is not defined
+
+tests/test_filters.py:210: NameError
+______________ TestBoundaryConditions.test_max_in_items_boundary _______________
+
+self = <test_filters.TestBoundaryConditions object at 0x7a372de97360>
+
+    def test_max_in_items_boundary(self):
+>       max_items = _MAX_IN_ITEMS
+                    ^^^^^^^^^^^^^
+E       NameError: name '_MAX_IN_ITEMS' is not defined
+
+tests/test_filters.py:216: NameError
+________ TestBoundaryConditions.test_max_in_items_plus_one_raises_error ________
+
+self = <test_filters.TestBoundaryConditions object at 0x7a372dedac30>
+
+    def test_max_in_items_plus_one_raises_error(self):
+>       max_items = _MAX_IN_ITEMS + 1
+                    ^^^^^^^^^^^^^
+E       NameError: name '_MAX_IN_ITEMS' is not defined
+
+tests/test_filters.py:224: NameError
+________ TestBoundaryConditions.test_empty_string_in_list_raises_error _________
+
+self = <test_filters.TestBoundaryConditions object at 0x7a372e0438a0>
+
+    def test_empty_string_in_list_raises_error(self):
+        with pytest.raises(FilterError, match="is an empty list"):
+>           _compile_field(
+            ^^^^^^^^^^^^^^
+                "document_id", "document_id", "string", ("in",), [""]
+            )
+E           NameError: name '_compile_field' is not defined
+
+tests/test_filters.py:233: NameError
+____________ TestBoundaryConditions.test_single_char_value_in_list _____________
+
+self = <test_filters.TestBoundaryConditions object at 0x7a372e043790>
+
+    def test_single_char_value_in_list(self):
+>       result = _compile_field(
+                 ^^^^^^^^^^^^^^
+            "document_id", "document_id", "string", ("in",), ["a"]
+        )
+E       NameError: name '_compile_field' is not defined
+
+tests/test_filters.py:238: NameError
+________________ TestFieldMapping.test_document_id_allowed_ops _________________
+
+self = <test_filters.TestFieldMapping object at 0x7a372deeccd0>
+
+    def test_document_id_allowed_ops(self):
+>       field_info = _FIELD_BY_NAME["document_id"]
+                     ^^^^^^^^^^^^^^
+E       NameError: name '_FIELD_BY_NAME' is not defined
+
+tests/test_filters.py:246: NameError
+________________ TestFieldMapping.test_chunk_index_allowed_ops _________________
+
+self = <test_filters.TestFieldMapping object at 0x7a372deece10>
+
+    def test_chunk_index_allowed_ops(self):
+>       field_info = _FIELD_BY_NAME["chunk_index"]
+                     ^^^^^^^^^^^^^^
+E       NameError: name '_FIELD_BY_NAME' is not defined
+
+tests/test_filters.py:251: NameError
+_____________ TestFieldMapping.test_document_name_only_contains_op _____________
+
+self = <test_filters.TestFieldMapping object at 0x7a372de97490>
+
+    def test_document_name_only_contains_op(self):
+>       field_info = _FIELD_BY_NAME["document_name"]
+                     ^^^^^^^^^^^^^^
+E       NameError: name '_FIELD_BY_NAME' is not defined
+
+tests/test_filters.py:256: NameError
+================================ tests coverage ================================
+_______________ coverage: platform linux, python 3.13.15-final-0 _______________
+
+Name                              Stmts   Miss Branch BrPart  Cover   Missing
+-----------------------------------------------------------------------------
+rag_system/retrieval/filters.py     106     17     60      8    80%   132, 143, 185, 187, 192, 199-214, 220, 277
+-----------------------------------------------------------------------------
+TOTAL                               106     17     60      8    80%
+=========================== short test summary info ============================
+FAILED tests/test_filters.py::TestCheckString::test_too_long_string_raises_error
+FAILED tests/test_filters.py::TestCheckString::test_control_character_raises_error
+FAILED tests/test_filters.py::TestCheckString::test_wildcard_escaped_in_like_pattern
+FAILED tests/test_filters.py::TestCheckInt::test_out_of_range_min_raises_error
+FAILED tests/test_filters.py::TestCompileField::test_eq_string_field - NameEr...
+FAILED tests/test_filters.py::TestCompileField::test_in_list_string_field - N...
+FAILED tests/test_filters.py::TestCompileField::test_contains_string_field - ...
+FAILED tests/test_filters.py::TestCompileField::test_int_comparison_operator
+FAILED tests/test_filters.py::TestCompileField::test_unknown_operator_raises_error
+FAILED tests/test_filters.py::TestCompileFilters::test_valid_filter_compiles
+FAILED tests/test_filters.py::TestCompileFilters::test_empty_filter_object_raises_error
+FAILED tests/test_filters.py::TestCompileFilters::test_in_list_empty_raises_error
+FAILED tests/test_filters.py::TestCompileFilters::test_in_list_too_long_raises_error
+FAILED tests/test_filters.py::TestBoundaryConditions::test_max_string_length_boundary
+FAILED tests/test_filters.py::TestBoundaryConditions::test_max_in_items_boundary
+FAILED tests/test_filters.py::TestBoundaryConditions::test_max_in_items_plus_one_raises_error
+FAILED tests/test_filters.py::TestBoundaryConditions::test_empty_string_in_list_raises_error
+FAILED tests/test_filters.py::TestBoundaryConditions::test_single_char_value_in_list
+FAILED tests/test_filters.py::TestFieldMapping::test_document_id_allowed_ops
+FAILED tests/test_filters.py::TestFieldMapping::test_chunk_index_allowed_ops
+FAILED tests/test_filters.py::TestFieldMapping::test_document_name_only_contains_op
+======================== 21 failed, 25 passed in 0.41s =========================

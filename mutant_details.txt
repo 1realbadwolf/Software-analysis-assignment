@@ -1,0 +1,174 @@
+
+============================================================
+MUTANT: rag_system.retrieval.filters.x__check_string__mutmut_3
+============================================================
+# rag_system.retrieval.filters.x__check_string__mutmut_3: survived
+--- rag_system/retrieval/filters.py
++++ rag_system/retrieval/filters.py
+@@ -5,7 +5,7 @@
+ def _check_string(field: str, operator: str, value: Any) -> str:
+     if not isinstance(value, str):
+         raise FilterError(
+-            f"filters.{field}.{operator} must be a string, got {type(value).__name__}."
++            f"filters.{field}.{operator} must be a string, got {type(None).__name__}."
+         )
+     if not value.strip():
+         raise FilterError(f"filters.{field}.{operator} must not be empty.")
+
+
+
+============================================================
+MUTANT: rag_system.retrieval.filters.x__check_string__mutmut_11
+============================================================
+# rag_system.retrieval.filters.x__check_string__mutmut_11: survived
+--- rag_system/retrieval/filters.py
++++ rag_system/retrieval/filters.py
+@@ -20,7 +20,7 @@
+                 f"({char!r}); quoting characters are refused, not escaped."
+             )
+     # Anything else non-printable would be invisible in a log line.
+-    if any(ord(c) < 0x20 or ord(c) == 0x7F for c in value):
++    if any(ord(c) < 0x20 and ord(c) == 0x7F for c in value):
+         raise FilterError(
+             f"filters.{field}.{operator} contains a control character."
+         )
+
+
+
+============================================================
+MUTANT: rag_system.retrieval.filters.x__check_string__mutmut_13
+============================================================
+# rag_system.retrieval.filters.x__check_string__mutmut_13: survived
+--- rag_system/retrieval/filters.py
++++ rag_system/retrieval/filters.py
+@@ -20,7 +20,7 @@
+                 f"({char!r}); quoting characters are refused, not escaped."
+             )
+     # Anything else non-printable would be invisible in a log line.
+-    if any(ord(c) < 0x20 or ord(c) == 0x7F for c in value):
++    if any(ord(c) <= 0x20 or ord(c) == 0x7F for c in value):
+         raise FilterError(
+             f"filters.{field}.{operator} contains a control character."
+         )
+
+
+
+============================================================
+MUTANT: rag_system.retrieval.filters.x__check_int__mutmut_4
+============================================================
+# rag_system.retrieval.filters.x__check_int__mutmut_4: survived
+--- rag_system/retrieval/filters.py
++++ rag_system/retrieval/filters.py
+@@ -2,7 +2,7 @@
+     # bool is an int subclass in Python; True as a chunk_index is a client bug.
+     if isinstance(value, bool) or not isinstance(value, int):
+         raise FilterError(
+-            f"filters.{field}.{operator} must be an integer, got {type(value).__name__}."
++            f"filters.{field}.{operator} must be an integer, got {type(None).__name__}."
+         )
+     if not (_INT32_MIN <= value <= _INT32_MAX):
+         raise FilterError(f"filters.{field}.{operator} is out of the int32 range.")
+
+
+
+============================================================
+MUTANT: rag_system.retrieval.filters.x__like_pattern__mutmut_12
+============================================================
+# rag_system.retrieval.filters.x__like_pattern__mutmut_12: survived
+--- rag_system/retrieval/filters.py
++++ rag_system/retrieval/filters.py
+@@ -1,4 +1,4 @@
+ def _like_pattern(value: str) -> str:
+     """``%value%`` with the LIKE wildcards inside *value* escaped."""
+-    escaped = value.replace("%", "\\%").replace("_", "\\_")
++    escaped = value.replace("%", "\\%").replace("XX_XX", "\\_")
+     return "'%" + escaped + "%'"
+
+
+
+============================================================
+MUTANT: rag_system.retrieval.filters.x__like_pattern__mutmut_13
+============================================================
+# rag_system.retrieval.filters.x__like_pattern__mutmut_13: survived
+--- rag_system/retrieval/filters.py
++++ rag_system/retrieval/filters.py
+@@ -1,4 +1,4 @@
+ def _like_pattern(value: str) -> str:
+     """``%value%`` with the LIKE wildcards inside *value* escaped."""
+-    escaped = value.replace("%", "\\%").replace("_", "\\_")
++    escaped = value.replace("%", "\\%").replace("_", "XX\\_XX")
+     return "'%" + escaped + "%'"
+
+
+
+============================================================
+MUTANT: rag_system.retrieval.filters.x__compile_field__mutmut_12
+============================================================
+# rag_system.retrieval.filters.x__compile_field__mutmut_12: survived
+--- rag_system/retrieval/filters.py
++++ rag_system/retrieval/filters.py
+@@ -16,7 +16,7 @@
+         if operator not in allowed:
+             raise FilterError(
+                 f"filters.{field} does not support the '{operator}' operator. "
+-                f"Supported: {', '.join(allowed)}."
++                f"Supported: {'XX, XX'.join(allowed)}."
+             )
+         value = constraint[operator]
+ 
+
+
+
+============================================================
+MUTANT: rag_system.retrieval.filters.x__compile_field__mutmut_18
+============================================================
+# rag_system.retrieval.filters.x__compile_field__mutmut_18: survived
+--- rag_system/retrieval/filters.py
++++ rag_system/retrieval/filters.py
+@@ -22,7 +22,7 @@
+ 
+         if operator == "in":
+             if not isinstance(value, list):
+-                raise FilterError(f"filters.{field}.in must be a list.")
++                raise FilterError(None)
+             if not value:
+                 raise FilterError(
+                     f"filters.{field}.in is an empty list; an IN-list that "
+
+
+
+============================================================
+MUTANT: rag_system.retrieval.filters.x_compile_filters__mutmut_3
+============================================================
+# rag_system.retrieval.filters.x_compile_filters__mutmut_3: survived
+--- rag_system/retrieval/filters.py
++++ rag_system/retrieval/filters.py
+@@ -16,8 +16,7 @@
+         return filters
+     if not isinstance(filters, dict):
+         raise FilterError(
+-            f"filters must be a JSON object, got {type(filters).__name__}. "
+-            f"Supported fields: {_describe_support()}."
++            None
+         )
+     if not filters:
+         raise FilterError(
+
+
+
+============================================================
+MUTANT: rag_system.retrieval.filters.x_compile_filters__mutmut_4
+============================================================
+# rag_system.retrieval.filters.x_compile_filters__mutmut_4: survived
+--- rag_system/retrieval/filters.py
++++ rag_system/retrieval/filters.py
+@@ -16,7 +16,7 @@
+         return filters
+     if not isinstance(filters, dict):
+         raise FilterError(
+-            f"filters must be a JSON object, got {type(filters).__name__}. "
++            f"filters must be a JSON object, got {type(None).__name__}. "
+             f"Supported fields: {_describe_support()}."
+         )
+     if not filters:
+

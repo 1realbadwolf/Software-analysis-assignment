@@ -1,0 +1,26 @@
+.......F...F.....FFF......FF........FFFF......                           [100%]
+=================================== FAILURES ===================================
+/content/localGPT/tests/test_filters_improved.py:66: AssertionError: Regex pattern did not match.
+/content/localGPT/tests/test_filters_improved.py:83: assert "'%test\\%value\\%%'" == "'\\%%test\\%%value\\%%'"
+/content/localGPT/rag_system/retrieval/filters.py:192: rag_system.retrieval.filters.FilterError: filters.document_id does not support the 'eq' operator. Supported: in.
+/content/localGPT/rag_system/retrieval/filters.py:192: rag_system.retrieval.filters.FilterError: filters.document_name does not support the 'eq' operator. Supported: contains.
+/content/localGPT/rag_system/retrieval/filters.py:192: rag_system.retrieval.filters.FilterError: filters.chunk_index does not support the 'eq' operator. Supported: gte.
+/content/localGPT/tests/test_filters_improved.py:159: AssertionError: Regex pattern did not match.
+/content/localGPT/tests/test_filters_improved.py:166: AssertionError: Regex pattern did not match.
+/content/localGPT/rag_system/retrieval/filters.py:192: rag_system.retrieval.filters.FilterError: filters.document_id does not support the 'eq' operator. Supported: in.
+/content/localGPT/tests/test_filters_improved.py:230: AssertionError: Regex pattern did not match.
+/content/localGPT/tests/test_filters_improved.py:236: AssertionError: Regex pattern did not match.
+/content/localGPT/rag_system/retrieval/filters.py:192: rag_system.retrieval.filters.FilterError: filters.document_id does not support the 'eq' operator. Supported: in.
+=========================== short test summary info ============================
+FAILED tests/test_filters_improved.py::TestCheckString::test_too_long_string_raises_error
+FAILED tests/test_filters_improved.py::TestCheckString::test_wildcard_escaped_in_like_pattern
+FAILED tests/test_filters_improved.py::TestCompileField::test_in_list_string_field
+FAILED tests/test_filters_improved.py::TestCompileField::test_contains_string_field
+FAILED tests/test_filters_improved.py::TestCompileField::test_int_comparison_operator
+FAILED tests/test_filters_improved.py::TestCompileFilters::test_in_list_empty_raises_error
+FAILED tests/test_filters_improved.py::TestCompileFilters::test_in_list_too_long_raises_error
+FAILED tests/test_filters_improved.py::TestBoundaryConditions::test_max_in_items_boundary
+FAILED tests/test_filters_improved.py::TestBoundaryConditions::test_max_in_items_plus_one_raises_error
+FAILED tests/test_filters_improved.py::TestBoundaryConditions::test_empty_string_in_list_raises_error
+FAILED tests/test_filters_improved.py::TestBoundaryConditions::test_single_char_value_in_list
+11 failed, 35 passed in 0.06s
