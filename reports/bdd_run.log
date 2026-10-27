@@ -1,0 +1,24 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.14, pytest-8.4.2, pluggy-1.7.0 -- /opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python
+cachedir: .pytest_cache
+rootdir: /workspace/scratch/c3334cb19c64/outputs/TrackE_CICD/build/track_e
+configfile: pyproject.toml
+plugins: platformdirs-4.13.5, bdd-8.1.0, cov-7.1.0
+collecting ... collected 3 items
+
+tests/test_metadata_filtering_bdd.py::test_apply_a_valid_metadata_filter PASSED [ 33%]
+tests/test_metadata_filtering_bdd.py::test_reject_an_invalid_metadata_filter PASSED [ 66%]
+tests/test_metadata_filtering_bdd.py::test_continue_without_filtering_when_no_filter_is_supplied PASSED [100%]
+
+- generated xml file: /workspace/scratch/c3334cb19c64/outputs/TrackE_CICD/reports/bdd.xml -
+================================ tests coverage ================================
+_______________ coverage: platform linux, python 3.12.14-final-0 _______________
+
+Name                              Stmts   Miss Branch BrPart  Cover   Missing
+-----------------------------------------------------------------------------
+rag_system/retrieval/filters.py     110      1     62      1    99%   291
+-----------------------------------------------------------------------------
+TOTAL                               110      1     62      1    99%
+Coverage XML written to file ../../reports/coverage.xml
+Coverage JSON written to file ../../reports/coverage.json
+============================== 3 passed in 0.11s ===============================

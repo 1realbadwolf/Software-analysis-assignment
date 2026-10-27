@@ -1,0 +1,13 @@
+{
+  "commit": "not-in-git",
+  "sha256": {
+    "rag_system/retrieval/filters.py": "6d34b83c61dd218d5e8b5b202a0c95c8e3d9651ba2d46d42a086380f0425abd8",
+    "tests/test_filters_mutation_v2.py": "28d731daa4667d876a51d4b844b7bf12e84a8241060b9033c71477e6f62b3db0",
+    "tests/test_tdd_documented_cases.py": "f6f88700c27871bab769a8291abf9d50b92e5fa68b4ad4c0d4da36389346c820",
+    "tests/test_filters_ci_gaps.py": "de8b7dffee1089402d889c66effcff5dc0940a748d95297531f667e40faa57b4",
+    "tests/test_metadata_filtering_bdd.py": "d0a9d4b5b1de2e0856bc71b17d966a24e9cf5787e9dd4f87ea5bedd30c5b4347",
+    "tests/test_integration_lancedb.py": "d57bd81b208906f96b2832d01a07c6a80e4f02d2d3a08278a0ec9de1631f6bbc",
+    "tests/features/metadata_filtering.feature": "c40eea2fba3fed4aafc9f62f43d5a3beb0c2c7bd96d43194569c7cd446308391"
+  },
+  "scope": "Copied source bytes are identical to the repository file; only package init files are isolated. Integration uses a small real LanceDB table. BDD is component-level."
+}

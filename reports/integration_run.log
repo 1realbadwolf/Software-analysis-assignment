@@ -1,0 +1,28 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.14, pytest-8.4.2, pluggy-1.7.0 -- /opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python
+cachedir: .pytest_cache
+rootdir: /workspace/scratch/c3334cb19c64/outputs/TrackE_CICD/build/track_e
+configfile: pyproject.toml
+plugins: platformdirs-4.13.5, bdd-8.1.0, cov-7.1.0
+collecting ... collected 7 items
+
+tests/test_integration_lancedb.py::test_eq_filter_selects_only_requested_document PASSED [ 14%]
+tests/test_integration_lancedb.py::test_in_filter_returns_union PASSED   [ 28%]
+tests/test_integration_lancedb.py::test_numeric_range_is_inclusive PASSED [ 42%]
+tests/test_integration_lancedb.py::test_contains_underscore_is_literal PASSED [ 57%]
+tests/test_integration_lancedb.py::test_contains_percent_is_literal PASSED [ 71%]
+tests/test_integration_lancedb.py::test_combined_conditions_narrow_database_result PASSED [ 85%]
+tests/test_integration_lancedb.py::test_no_match_returns_empty_result PASSED [100%]
+
+- generated xml file: /workspace/scratch/c3334cb19c64/outputs/TrackE_CICD/reports/integration.xml -
+================================ tests coverage ================================
+_______________ coverage: platform linux, python 3.12.14-final-0 _______________
+
+Name                              Stmts   Miss Branch BrPart  Cover   Missing
+-----------------------------------------------------------------------------
+rag_system/retrieval/filters.py     110      1     62      1    99%   291
+-----------------------------------------------------------------------------
+TOTAL                               110      1     62      1    99%
+Coverage XML written to file ../../reports/coverage.xml
+Coverage JSON written to file ../../reports/coverage.json
+============================== 7 passed in 3.92s ===============================

@@ -1,0 +1,85 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.14, pytest-8.4.2, pluggy-1.7.0 -- /opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python
+cachedir: .pytest_cache
+rootdir: /workspace/scratch/c3334cb19c64/outputs/TrackE_CICD/build/track_e
+configfile: pyproject.toml
+plugins: platformdirs-4.13.5, bdd-8.1.0, cov-7.1.0
+collecting ... collected 64 items
+
+tests/test_filters_mutation_v2.py::TestFilterError::test_filter_error_is_value_error PASSED [  1%]
+tests/test_filters_mutation_v2.py::TestFilterError::test_filter_error_message PASSED [  3%]
+tests/test_filters_mutation_v2.py::TestCompiledFilter::test_compiled_filter_creation PASSED [  4%]
+tests/test_filters_mutation_v2.py::TestCompiledFilter::test_compiled_filter_signature PASSED [  6%]
+tests/test_filters_mutation_v2.py::TestCompiledFilter::test_compiled_filter_str PASSED [  7%]
+tests/test_filters_mutation_v2.py::TestCheckString::test_valid_string PASSED [  9%]
+tests/test_filters_mutation_v2.py::TestCheckString::test_empty_string_raises_error PASSED [ 10%]
+tests/test_filters_mutation_v2.py::TestCheckString::test_too_long_string_raises_error PASSED [ 12%]
+tests/test_filters_mutation_v2.py::TestCheckString::test_forbidden_quote_raises_error PASSED [ 14%]
+tests/test_filters_mutation_v2.py::TestCheckString::test_forbidden_backslash_raises_error PASSED [ 15%]
+tests/test_filters_mutation_v2.py::TestCheckString::test_control_character_raises_error PASSED [ 17%]
+tests/test_filters_mutation_v2.py::TestCheckString::test_wildcard_escaped_in_like_pattern PASSED [ 18%]
+tests/test_filters_mutation_v2.py::TestCheckInt::test_valid_int PASSED   [ 20%]
+tests/test_filters_mutation_v2.py::TestCheckInt::test_bool_raises_error PASSED [ 21%]
+tests/test_filters_mutation_v2.py::TestCheckInt::test_out_of_range_min_raises_error PASSED [ 23%]
+tests/test_filters_mutation_v2.py::TestCheckInt::test_out_of_range_max_raises_error PASSED [ 25%]
+tests/test_filters_mutation_v2.py::TestCompileField::test_eq_string_field PASSED [ 26%]
+tests/test_filters_mutation_v2.py::TestCompileField::test_in_list_string_field PASSED [ 28%]
+tests/test_filters_mutation_v2.py::TestCompileField::test_contains_string_field PASSED [ 29%]
+tests/test_filters_mutation_v2.py::TestCompileField::test_int_comparison_operator PASSED [ 31%]
+tests/test_filters_mutation_v2.py::TestCompileField::test_unknown_operator_raises_error PASSED [ 32%]
+tests/test_filters_mutation_v2.py::TestCompileFilters::test_valid_filter_compiles PASSED [ 34%]
+tests/test_filters_mutation_v2.py::TestCompileFilters::test_none_filter_returns_none PASSED [ 35%]
+tests/test_filters_mutation_v2.py::TestCompileFilters::test_empty_dict_raises_error PASSED [ 37%]
+tests/test_filters_mutation_v2.py::TestCompileFilters::test_unknown_field_raises_error PASSED [ 39%]
+tests/test_filters_mutation_v2.py::TestCompileFilters::test_empty_filter_object_raises_error PASSED [ 40%]
+tests/test_filters_mutation_v2.py::TestCompileFilters::test_in_list_empty_raises_error PASSED [ 42%]
+tests/test_filters_mutation_v2.py::TestCompileFilters::test_in_list_too_long_raises_error PASSED [ 43%]
+tests/test_filters_mutation_v2.py::TestCompileFilters::test_compiled_filter_passes_through PASSED [ 45%]
+tests/test_filters_mutation_v2.py::TestCombine::test_combine_with_none_user_filter PASSED [ 46%]
+tests/test_filters_mutation_v2.py::TestCombine::test_combine_with_none_internal_filter PASSED [ 48%]
+tests/test_filters_mutation_v2.py::TestCombine::test_combine_both_filters PASSED [ 50%]
+tests/test_filters_mutation_v2.py::TestCombine::test_combine_empty_parts_returns_none PASSED [ 51%]
+tests/test_filters_mutation_v2.py::TestBoundaryConditions::test_max_int32_value PASSED [ 53%]
+tests/test_filters_mutation_v2.py::TestBoundaryConditions::test_min_int32_value PASSED [ 54%]
+tests/test_filters_mutation_v2.py::TestBoundaryConditions::test_max_string_length_boundary PASSED [ 56%]
+tests/test_filters_mutation_v2.py::TestBoundaryConditions::test_max_in_items_boundary PASSED [ 57%]
+tests/test_filters_mutation_v2.py::TestBoundaryConditions::test_max_in_items_plus_one_raises_error PASSED [ 59%]
+tests/test_filters_mutation_v2.py::TestBoundaryConditions::test_empty_string_in_list_raises_error PASSED [ 60%]
+tests/test_filters_mutation_v2.py::TestBoundaryConditions::test_single_char_value_in_list PASSED [ 62%]
+tests/test_filters_mutation_v2.py::TestFieldMapping::test_document_id_allowed_ops PASSED [ 64%]
+tests/test_filters_mutation_v2.py::TestFieldMapping::test_chunk_index_allowed_ops PASSED [ 65%]
+tests/test_filters_mutation_v2.py::TestFieldMapping::test_document_name_only_contains_op PASSED [ 67%]
+tests/test_filters_mutation_v2.py::TestCompileFiltersEdgeCases::test_multiple_fields_anded PASSED [ 68%]
+tests/test_filters_mutation_v2.py::TestCompileFiltersEdgeCases::test_field_order_preserved PASSED [ 70%]
+tests/test_filters_mutation_v2.py::TestCompileFiltersEdgeCases::test_complex_filter_with_wildcards PASSED [ 71%]
+tests/test_filters_mutation_v2.py::test_mutation_string_error_reports_actual_type PASSED [ 73%]
+tests/test_filters_mutation_v2.py::test_mutation_rejects_del_control_character PASSED [ 75%]
+tests/test_filters_mutation_v2.py::test_mutation_accepts_ordinary_spaces PASSED [ 76%]
+tests/test_filters_mutation_v2.py::test_mutation_integer_error_reports_actual_type PASSED [ 78%]
+tests/test_filters_mutation_v2.py::test_mutation_escapes_sql_underscore_wildcard PASSED [ 79%]
+tests/test_filters_mutation_v2.py::test_mutation_unsupported_operator_lists_all_allowed PASSED [ 81%]
+tests/test_filters_mutation_v2.py::test_mutation_in_operator_requires_list PASSED [ 82%]
+tests/test_filters_mutation_v2.py::test_mutation_non_dict_error_identifies_input PASSED [ 84%]
+tests/test_tdd_documented_cases.py::test_whitespace_only_string_is_rejected PASSED [ 85%]
+tests/test_tdd_documented_cases.py::test_document_name_contains_trims_surrounding_spaces PASSED [ 87%]
+tests/test_tdd_documented_cases.py::test_boolean_is_rejected_as_integer[True] PASSED [ 89%]
+tests/test_tdd_documented_cases.py::test_boolean_is_rejected_as_integer[False] PASSED [ 90%]
+tests/test_tdd_documented_cases.py::test_non_string_operator_key_raises_filter_error PASSED [ 92%]
+tests/test_tdd_documented_cases.py::test_unicode_control_character_is_rejected PASSED [ 93%]
+tests/test_filters_ci_gaps.py::test_integer_in_list_has_exact_sql PASSED [ 95%]
+tests/test_filters_ci_gaps.py::test_integer_equality_has_exact_sql PASSED [ 96%]
+tests/test_filters_ci_gaps.py::test_numeric_in_list_rejects_boolean_with_field_details PASSED [ 98%]
+tests/test_filters_ci_gaps.py::test_multiple_fields_and_operators_have_exact_canonical_sql PASSED [100%]
+
+- generated xml file: /workspace/scratch/c3334cb19c64/outputs/TrackE_CICD/reports/unit.xml -
+================================ tests coverage ================================
+_______________ coverage: platform linux, python 3.12.14-final-0 _______________
+
+Name                              Stmts   Miss Branch BrPart  Cover   Missing
+-----------------------------------------------------------------------------
+rag_system/retrieval/filters.py     110      1     62      1    99%   291
+-----------------------------------------------------------------------------
+TOTAL                               110      1     62      1    99%
+Coverage XML written to file ../../reports/coverage.xml
+Coverage JSON written to file ../../reports/coverage.json
+============================== 64 passed in 0.22s ==============================

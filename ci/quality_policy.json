@@ -1,0 +1,8 @@
+{
+  "statement_coverage_min": 95.0,
+  "branch_coverage_min": 90.0,
+  "mutation_score_min": 75.0,
+  "minimum_test_counts": {"unit": 64, "integration": 7, "bdd": 3},
+  "scope": "rag_system/retrieval/filters.py",
+  "justification": "Statement and branch floors are below measured 97.27% and 95.16%, leaving limited headroom. The 75% mutation floor is below the earlier 76.06% result; the new source must be measured independently. These are proposed group thresholds, not lecturer-prescribed values."
+}
